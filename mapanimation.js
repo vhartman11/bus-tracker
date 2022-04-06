@@ -7,27 +7,64 @@ const map = new mapboxgl.Map({
     zoom: 14,
 });
 
-/*async function run(){ //gets the bus data  
+async function run(){
     const locations = await getBusLocations();
-	console.log(new Date());
 	console.log(locations);
-	setTimeout(run, 15000); //will update every 15 seconds
+	setTimeout(run, 15000);
+}    
 
-async function getBusLocations(){ //this gets the data
+async function getBusLocations(){
     const url = 'https://api-v3.mbta.com/vehicles?filter[route]=1&include=trip';
     const response = await fetch(url);
-    const json     = await response.json();
-    return json.data;*/
+    const data    = await response.json();
+    console.log(data);
+}    
 
-/*let marker = new mapboxgl.Marker() //makes a marker
-    .setLngLat([-71.093729, 42.359244])
-    .addTo(map);
-    let counter = 0;
-    function move() {
-    setTimeout(() => {
-      if (counter >= busStops.length) return;
-      marker.setLngLat(busStops[counter]);
-      counter ++;
-      move();
-    }, 1000);
-}*/
+run()
+
+let markers = new mapboxgl.Marker()
+    .setLngLat // this will need to be set to the lng and lat of the busses in the array
+    .addTo(map)
+
+const length = data.lenght
+
+for (let i=0; i<length; i++) {
+    const route = data [i];
+    const marker = L.marker(
+        new L.LatLng(route[], route[]),
+        { icon: L.mapbox.marker.icon({
+            'marker-symbol': 'post',
+            'marker-color': '0044ff'}),
+            title: title
+        }
+    )
+    marker.bindPopup(title);
+    markers.addlayer(marker)
+}
+
+map.addLayer(markers);
+
+
+
+
+
+/*const markers = new L.MarkerClusterGroup();
+const data = chicago.data;
+const length = data.lenght;*/
+
+/*for (let i=0; i<length; i++) {
+  const a = chicago.data [i];
+  const title = a[13];
+  const marker = L.marker(
+    new L.LatLng(a[26], a[28]),
+    { icon: L.mapbox.marker.icon({
+      'marker-symbol': 'post',
+      'marker-color': '0044ff'}),
+      title: title
+    });
+  marker.bindPopup(title);
+  markers.addLayer(marker);  
+}
+
+map.addLayer(markers);*/
+
