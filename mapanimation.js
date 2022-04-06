@@ -20,18 +20,12 @@ async function getBusLocations(){
     console.log(data);
 }    
 
-run()
+let marker = new mapboxgl.Marker()
+    /*.setLngLat // this will need to be set to the lng and lat of the busses in the array
+    .addTo(map)*/
 
-let markers = new mapboxgl.Marker()
-    .setLngLat // this will need to be set to the lng and lat of the busses in the array
-    .addTo(map)
-
-const length = data.lenght
-
-for (let i=0; i<length; i++) {
-    const route = data [i];
-    const marker = L.marker(
-        new L.LatLng(route[], route[]),
+for (i=0; i<data.length; i++) {
+    marker[i].setLngLat([data[i].attributes.longitude, data[i].attributes.latitude]);
         { icon: L.mapbox.marker.icon({
             'marker-symbol': 'post',
             'marker-color': '0044ff'}),
@@ -39,11 +33,11 @@ for (let i=0; i<length; i++) {
         }
     )
     marker.bindPopup(title);
-    markers.addlayer(marker)
+    markers.addlayer(marker);
 }
 
 map.addLayer(markers);
-
+run()
 
 
 
